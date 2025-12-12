@@ -14,7 +14,10 @@ return () => clearInterval(ticker);
 
 }, []);
 
-return ( <div className="relative w-full overflow-hidden flex items-end px-10"> <div ref={containerRef} className="flex gap-8" style={{ transform: translateX(-${offset}px)}px)`, transition: "transform 0.03s linear", }} > {extendedImages.map((img, index) => { const centerScreen = window.innerWidth / 2; const xPosition = index * totalWidth - offset + totalWidth / 2;
+return ( <div className="relative w-full overflow-hidden flex items-end px-10"> <div ref={containerRef} className="flex gap-8" style={{
+  transform: `translateX(-${offset}px)`,
+  transition: "transform 0.03s linear",
+}}> {extendedImages.map((img, index) => { const centerScreen = window.innerWidth / 2; const xPosition = index * totalWidth - offset + totalWidth / 2;
 
 const distanceFromCenter = Math.abs(centerScreen - xPosition);
       const normalized = Math.min(distanceFromCenter / 500, 1);
