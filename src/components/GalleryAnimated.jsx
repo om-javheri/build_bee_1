@@ -28,40 +28,47 @@ function GalleryAnimated() {
     const interval = setInterval(() => {
       setCurrentIndex((i) => (i + 1) % images.length);
     }, 2000);
-
     return () => clearInterval(interval);
   }, [images.length]);
 
-  // Generate the visible 5 images in a loop
   const visibleImages = Array.from({ length: totalImagesAtOnce }, (_, i) => {
     return images[(currentIndex + i) % images.length];
   });
 
-  // Wave height calculation
   const center = Math.floor(totalImagesAtOnce / 2);
-  const step = (maxHeight - minHeight) / center;
-
-  const heightArray = Array.from({ length: totalImagesAtOnce }, (_, i) => {
-    if (i === center) return maxHeight;
-    if (i < center) return minHeight + step * i;
-    return minHeight + step * (totalImagesAtOnce - i - 1);
-  });
 
   return (
-    <div className="flex-1 flex mt-auto gap-8 overflow-hidden px-10">
-      {visibleImages.map((image, index) => (
-        <ImageContainer
-          key={index}
-          imageSrc={image.src}
-          imageAlt={image.alt}
-          height={heightArray[index]}
-        />
-      ))}
+    <div className="flex-1 flex mt-auto gap-8 overflow-hidden px-10 relative">
+      {visibleImages.map((image, index) => {
+        const distance = Math.abs(center - index); // 0 → center, 1 → near, 2 → far
+        const height = maxHeight - (distance * 40); // smaller away from center
+        const scale = 1 - distance * 0.15; // scale center = 1, others = smaller
+        const opacity = 1 - distance * 0.2;
+
+        return (
+          <div
+            key={index}
+            className="transition-all duration-700 ease-out"
+            style={{
+              height,
+              transform: `scale(${scale}) translateX(0px)`,
+              opacity,
+            }}
+          >
+            <img
+              className="h-[320px] w-[300px] object-cover rounded-t-full transition-all duration-700"
+              src={image.src}
+              alt={image.alt}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 }
 
 export default GalleryAnimated;
+
 
 function ImageContainer({ imageSrc, imageAlt, height }) {
   return (
