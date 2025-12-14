@@ -13,11 +13,11 @@ import image7 from "./assets/gallery/7.jpg"
 function App() {
   // Define images with colors here
   const images = [
-    // { src: image1, alt: "Image 1", color1: "#11171c", color2: "#3c4146" },
-    // { src: image2, alt: "Image 2", color1: "#191f25", color2: "#7f96a5" },
-    // { src: image4, alt: "Image 4", color1: "#e1e1e1", color2: "#99acac" },
-    // { src: image5, alt: "Image 5", color1: "#323d45", color2: "#60666d" },
-    // { src: image6, alt: "Image 6", color1: "#662434", color2: "#111e22" },
+    { src: image1, alt: "Image 1", color1: "#11171c", color2: "#3c4146" },
+    { src: image2, alt: "Image 2", color1: "#191f25", color2: "#7f96a5" },
+    { src: image4, alt: "Image 4", color1: "#e1e1e1", color2: "#99acac" },
+    { src: image5, alt: "Image 5", color1: "#323d45", color2: "#60666d" },
+    { src: image6, alt: "Image 6", color1: "#662434", color2: "#111e22" },
     { src: image7, alt: "Image 7", color1: "#1e1e1e", color2: "#861026" },
   ];
 
