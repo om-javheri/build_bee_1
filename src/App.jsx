@@ -13,12 +13,12 @@ import image7 from "./assets/gallery/7.jpg"
 function App() {
   // Define images with colors here
   const images = [
-    { src: image1, alt: "Image 1", color1: "#11171c", color2: "#3c4146" },
-    { src: image2, alt: "Image 2", color1: "#191f25", color2: "#7f96a5" },
-    { src: image4, alt: "Image 4", color1: "#e1e1e1", color2: "#99acac" },
-    { src: image5, alt: "Image 5", color1: "#323d45", color2: "#60666d" },
-    { src: image6, alt: "Image 6", color1: "#111e22", color2: "#662434" },
-    { src: image7, alt: "Image 7", color1: "#1e293b", color2: "#0f172a" },
+    // { src: image1, alt: "Image 1", color1: "#11171c", color2: "#3c4146" },
+    // { src: image2, alt: "Image 2", color1: "#191f25", color2: "#7f96a5" },
+    // { src: image4, alt: "Image 4", color1: "#e1e1e1", color2: "#99acac" },
+    // { src: image5, alt: "Image 5", color1: "#323d45", color2: "#60666d" },
+    // { src: image6, alt: "Image 6", color1: "#662434", color2: "#111e22" },
+    { src: image7, alt: "Image 7", color1: "#1e1e1e", color2: "#861026" },
   ];
 
   const totalImagesAtOnce = 5
@@ -32,19 +32,18 @@ function App() {
       className="w-full flex flex-col min-h-screen flex-1"
       style={{
         background: `
-    linear-gradient(
-      20deg,
-      ${currentColors.color1} 0%,
-      ${currentColors.color1} 45%,
-      ${currentColors.color2} 45%,
-      ${currentColors.color2} 100%
-    ) 0 200px / 100% 500px no-repeat,
-    ${currentColors.color2}
-  `
+      linear-gradient(
+        20deg,
+        ${currentColors.color1} 0%,
+        ${currentColors.color1} 45%,
+        ${currentColors.color2} 45%,
+        ${currentColors.color2} 100%
+      ) -70px 280px / 100% 60vh no-repeat,
+      ${currentColors.color2}
+    `
       }}
-
-
     >
+
       <BrowserRouter basename="/build_bee_1">
         <Routes>
           <Route
