@@ -1,21 +1,40 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-function Button({ text, type, iconPosition = "right", icon = null, classNameAdd = "", classNameOverWrite = "" }) {
+function Button({
+  text,
+  type,
+  iconPosition = "right",
+  icon = null,
+  classNameAdd = "",
+  classNameOverWrite = ""
+}) {
   const buttonClassFun = () => {
     if (type === 'primary') {
       return 'bg-white text-dark hover:bg-gray-200'
-    } else {
-      return 'bg-gray-300 text-black'
     }
+    return 'bg-gray-300 text-black'
   }
-  const buttonClass = buttonClassFun()
+  const [show, setShow] = useState(false)
+
+  useEffect(() => {
+    setShow(true)
+  }, [])
   return (
-    <button className={classNameOverWrite || `  py-2 px-5 rounded-full hover:cursor-pointer flex justify-center items-center gap-2 w-full ${buttonClass} ${classNameAdd} `}>
+    <button
+      className={`
+        py-2 px-5 rounded-full w-full
+        flex items-center justify-center gap-2 cursor-pointer
+        ${buttonClassFun()} ${classNameAdd} 
+        transition-all duration-700 ease-out
+        origin-center
+        ${show ? "scale-100 opacity-100" : "scale-0 opacity-0"}
+      `}
+    >
+
       {iconPosition === "left" && icon}
       {text}
       {iconPosition === "right" && icon}
     </button>
-
   )
 }
 

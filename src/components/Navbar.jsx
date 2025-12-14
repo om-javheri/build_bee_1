@@ -1,11 +1,19 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import Button from './Button'
 import logo from '../assets/logo/logo.png'
 
 function Navbar() {
+  const [show, setShow] = useState(false)
+
+  useEffect(() => {
+    setShow(true)
+  }, [])
   return (
-    <div className="flex justify-between items-center px-10 py-5">
+
+    <div className={`flex justify-between items-center px-10 py-5 space-y-3
+        transition-all duration-700 ease-in
+        ${show ? 'translate-y-0 opacity-100' : '-translate-y-6 opacity-0'}`}>
       <div className="w-18">
         <img src={logo} alt="Logo" className=" " />
       </div>
