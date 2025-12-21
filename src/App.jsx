@@ -29,7 +29,7 @@ function App() {
 
   return (
     <div
-      className="w-full flex flex-col min-h-screen flex-1 relative "
+      className="w-full flex flex-col min-h-screen flex-1 relative overflow-hidden"
       style={{
         background: `linear-gradient(135deg, ${currentColors.color1}, ${currentColors.color2})`,
       }}
