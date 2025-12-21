@@ -2,67 +2,62 @@
 import React, { useEffect, useState } from "react";
 
 function GalleryAnimated({ images, currentIndex, setCurrentIndex, totalImagesAtOnce }) {
-  const [show, setShow] = useState(false)
-  const [hasAppeared, setHasAppeared] = useState(false)
+  const [show, setShow] = useState(false);
+  const [hasAppeared, setHasAppeared] = useState(false);
 
   useEffect(() => {
-    setShow(true)
-    const timer = setTimeout(() => setHasAppeared(true), 700)
-    return () => clearTimeout(timer)
-  }, [])
+    setShow(true);
+    const timer = setTimeout(() => setHasAppeared(true), 700);
+    return () => clearTimeout(timer);
+  }, []);
 
-  const center = Math.floor(totalImagesAtOnce / 2)
-  const minHeight = 160
-  const maxHeight = 320
+  const center = Math.floor(totalImagesAtOnce / 2);
 
-  const prev = () => setCurrentIndex((i) => (i - 1 + images.length) % images.length)
-  const next = () => setCurrentIndex((i) => (i + 1) % images.length)
+  const prev = () => setCurrentIndex((i) => (i - 1 + images.length) % images.length);
+  const next = () => setCurrentIndex((i) => (i + 1) % images.length);
 
+  // Responsive slot styles using relative units
+  const slotStyles = {
+    0: "z-4 scale-100 opacity-100 h-90 md:h-[360px]", // center image
+    1: "z-3 scale-90 opacity-80 h-60 md:h-[300px] translate-x-1/4 md:translate-x-[175px]",
+    "-1": "z-3 scale-90 opacity-80 h-60 md:h-[300px] -translate-x-1/4 md:-translate-x-[475px]",
+    2: "z-2 scale-75 opacity-60 h-48 md:h-[240px] translate-x-1/2 md:translate-x-[460px]",
+    "-2": "z-2 scale-75 opacity-60 h-48 md:h-[240px] -translate-x-1/2 md:-translate-x-[760px]",
+  };
+  const hiddenStyle = "scale-0 opacity-0";
   // Auto-play
   useEffect(() => {
     const interval = setInterval(() => next(), 3000);
     return () => clearInterval(interval);
   }, [])
-
   return (
-    <div className="relative h-[360px] w-full flex flex-1 overflow-hidden">
+    <div className="relative h-80 md:h-[360px] w-full flex flex-1 overflow-hidden items-end">
       {Array.from({ length: totalImagesAtOnce }).map((_, i) => {
-        const index = (currentIndex + i - center + images.length) % images.length
-        const position = i - center
-        const distance = Math.abs(position)
-        const height = maxHeight - distance * ((maxHeight - minHeight) / center)
-        const scale = 1 - distance * 0.12
-        const opacity = 1 - distance * 0.2
-        const CARD_WIDTH = 300
-        const GAP = 30
-        const translateX = position * (CARD_WIDTH + GAP) * (1 - distance * 0.06)
+        const index = (currentIndex + i - center + images.length) % images.length;
+        const position = i - center;
+        const style = slotStyles[position] ?? hiddenStyle;
 
         return (
           <div
             key={index}
-            className={`absolute bottom-0 left-1/2 ${show ? "scale-100 opacity-100" : "scale-0 opacity-0"}`}
-            style={{
-              height,
-              transform: `translateX(-50%) translateX(${translateX}px) scale(${show ? scale : 0})`,
-              opacity: show ? opacity : 0,
-              zIndex: totalImagesAtOnce - distance,
-              transition: `
-                transform 0.7s ease ${hasAppeared ? "0s" : "0.7s"},
-                height 0.7s ease,
-                opacity 0.5s ease ${hasAppeared ? "0s" : "0.7s"}
-              `,
-            }}
+            className={`
+    absolute bottom-0 left-1/2
+    -translate-x-1/2
+    transition-all duration-700 ease-out origin-bottom w-full md:w-[300px]
+    ${show ? style : "scale-0 opacity-0"}
+  `}
           >
+
             <img
               src={images[index].src}
               alt={images[index].alt}
-              className="w-[300px] h-full object-center rounded-t-full"
+              className="w-full h-full object-center rounded-t-full"
             />
           </div>
-        )
+        );
       })}
     </div>
-  )
+  );
 }
 
-export default GalleryAnimated
+export default GalleryAnimated;

@@ -1,64 +1,98 @@
-import React, { useEffect, useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
-import Button from './Button'
-import logo from '../assets/logo/logo.png'
+import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import Button from './Button';
+import logo from '../assets/logo/logo.png';
 
 function Navbar() {
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    setShow(true)
-  }, [])
+    setShow(true);
+  }, []);
+
+  const menuItems = ["Home", "Shop", "Sale", "Blog"];
+
   return (
+    <div
+      className={`
+        flex 
+        justify-between items-center
+        px-4 sm:px-8 lg:px-10
+        pt-4 sm:pt-6
+        gap-4
+        transition-all duration-700 ease-in flex-wrap
+        ${show ? 'translate-y-0 opacity-100' : '-translate-y-6 opacity-0'}
+      `}
+    >
+      <img src={logo} alt="Logo" className="w-16 sm:w-20  order-1 md:order-2" />
 
-    <div className={`flex justify-between items-center px-10 py-5 space-y-3
-        transition-all duration-700 ease-in
-        ${show ? 'translate-y-0 opacity-100' : '-translate-y-6 opacity-0'}`}>
-      <div className="w-18">
-        <img src={logo} alt="Logo" className=" " />
+      {/* Desktop Menu */}
+      <div className="hidden md:flex rounded-full bg-[#838383] gap-1 order-2">
+        {menuItems.map((item) => (
+          <NavLink
+            key={item}
+            to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+            className={({ isActive }) =>
+              `py-2 px-4 rounded-full text-sm hover:bg-gray-200 ${isActive ? "bg-white text-black" : "text-black"}`
+            }
+          >
+            {item}
+          </NavLink>
+        ))}
       </div>
-      <div className="rounded-full bg-[#838383]  flex gap-4">
-        <NavLink
-          to="/"
-          className={({ isActive }) =>
-            `py-2 px-5 rounded-full hover:bg-gray-200 ${isActive ? "bg-white text-black" : ""
-            }`
-          }
-        >
-          Home
-        </NavLink>
-        <NavLink
-          to="/shop"
-          className={({ isActive }) =>
-            `py-2 px-5 rounded-full hover:bg-gray-200 ${isActive ? "bg-white text-black" : ""
-            }`
-          }
-        >
-          Shop
-        </NavLink>
-        <NavLink
-          to="/sale"
-          className={({ isActive }) =>
-            `py-2 px-5 rounded-full hover:bg-gray-200 ${isActive ? "bg-white text-black" : ""
-            }`
-          }
-        >
-          Sale
-        </NavLink>
-        <NavLink
-          to="/blog"
-          className={({ isActive }) =>
-            `py-2 px-5 rounded-full hover:bg-gray-200 ${isActive ? "bg-white text-black" : ""
-            }`
-          }
-        >
-          Blog
-        </NavLink>
-      </div>
-      <div className=""><Button text={"Sign Up"} type={"primary"} /></div>
 
-    </div >
-  )
+      {/* Hamburger for mobile */}
+      <div className="md:hidden flex items-center gap-2 order-1 ">
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="w-6 h-6 focus:outline-none z-2"
+        >
+          {mobileMenuOpen ? (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+              <path
+                fillRule="evenodd"
+                d="M18.3 5.71a1 1 0 00-1.42-1.42L12 9.17 7.12 4.29A1 1 0 105.7 5.71L10.59 10.6 5.7 15.49a1 1 0 101.42 1.42L12 12.83l4.88 4.88a1 1 0 001.42-1.42L13.41 10.6l4.89-4.89z"
+                clipRule="evenodd"
+              />
+            </svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          )}
+        </button>
+      </div>
+      <div className="mb-1 hidden md:block order-3">
+
+        <Button text="Sign Up" type="primary" className="w-full mt-2" />
+      </div>
+
+
+      {/* Mobile Dropdown */}
+      <div
+        className={`
+    md:hidden overflow-hidden transition-all w-full min-w-full duration-700 ease-in-out order-3
+    ${mobileMenuOpen ? 'max-h-96 mt-2' : 'max-h-0'}
+  `}
+      >
+        <div className="bg-white/30 backdrop-blur-lg rounded-xl shadow-lg p-4 flex flex-col gap-4 border border-white/20">
+          {menuItems.map((item) => (
+            <NavLink
+              key={item}
+              to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+              onClick={() => setMobileMenuOpen(false)}
+              className="hover:text-white transition-colors"
+            >
+              {item}
+            </NavLink>
+          ))}
+          <Button text="Sign Up" type="primary" className="w-full mt-2" />
+        </div>
+      </div>
+
+    </div>
+  );
 }
 
-export default Navbar
+export default Navbar;

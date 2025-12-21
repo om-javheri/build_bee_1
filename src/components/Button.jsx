@@ -22,13 +22,15 @@ function Button({
   return (
     <button
       className={`
-        py-2 px-5 rounded-full w-full
-        flex items-center justify-center gap-2 cursor-pointer
-        ${buttonClassFun()} ${classNameAdd} 
-        transition-all duration-700 ease-out
-        origin-center
-        ${show ? "scale-100 opacity-100" : "scale-0 opacity-0"}
-      `}
+    py-2 px-4 sm:px-5
+    text-sm sm:text-base
+    rounded-full
+    flex items-center justify-center gap-2
+    ${buttonClassFun()} ${classNameAdd}
+    transition-all duration-700 ease-out
+    origin-center
+    ${show ? "scale-100 opacity-100" : "scale-0 opacity-0"}
+  `}
     >
 
       {iconPosition === "left" && icon}
